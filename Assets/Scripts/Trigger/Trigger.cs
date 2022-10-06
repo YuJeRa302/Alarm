@@ -5,6 +5,8 @@ public class Trigger : MonoBehaviour
 {
     [SerializeField] private UnityEvent _triggerEnter = new UnityEvent();
 
+    private Alarm _alarm;
+
     public event UnityAction TriggerEnter
     {
         add => _triggerEnter.AddListener(value);
@@ -13,12 +15,18 @@ public class Trigger : MonoBehaviour
 
     public bool IsTriggerEnter { get; private set; }
 
+    private void Awake()
+    {
+        _alarm = FindObjectOfType<Alarm>();
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             IsTriggerEnter = true;
             _triggerEnter.Invoke();
+            _alarm.ChangeSound(IsTriggerEnter);
         }
     }
 
@@ -28,6 +36,7 @@ public class Trigger : MonoBehaviour
         {
             IsTriggerEnter = false;
             _triggerEnter.Invoke();
+            _alarm.ChangeSound(IsTriggerEnter);
         }
     }
 }

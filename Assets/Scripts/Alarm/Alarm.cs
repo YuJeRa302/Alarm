@@ -1,62 +1,46 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Alarm : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
 
-    private Trigger _trigger;
-
-    private IEnumerator _soundEnable;
-    private IEnumerator _soundDisable;
+    private IEnumerator _sound—hange;
 
     private void Start()
     {
-        _soundEnable = IncreaseSound();
-        _soundDisable = ReductionSound();
         _audioSource.Play();
     }
 
-    private void OnEnable()
+    public void ChangeSound(bool isTriggerEnter)
     {
-        _trigger = FindObjectOfType<Trigger>();
-        _trigger.TriggerEnter += TriggerEnter;
-    }
-
-    private void TriggerEnter()
-    {
-        if (_trigger.IsTriggerEnter == true)
+        if (_sound—hange != null)
         {
-            if (_soundDisable != null)
-            {
-                StopCoroutine(_soundDisable);
-                StartCoroutine(_soundEnable);
-            }
+            StopCoroutine(_sound—hange);
+            _sound—hange = —hangeVolume(isTriggerEnter);
+            StartCoroutine(_sound—hange);
         }
         else
         {
-            if (_soundEnable != null)
+            _sound—hange = —hangeVolume(isTriggerEnter);
+            StartCoroutine(_sound—hange);
+        }
+    }
+
+    private IEnumerator —hangeVolume(bool isChagenVolume)
+    {
+        while (true)
+        {
+            if (isChagenVolume == true)
             {
-                StopCoroutine(_soundEnable);
-                StartCoroutine(_soundDisable);
+                _audioSource.volume += Time.deltaTime;
             }
-        }
-    }
+            else
+            {
+                _audioSource.volume -= Time.deltaTime;
+            }
 
-    private IEnumerator IncreaseSound()
-    {
-        while (true)
-        {
-            _audioSource.volume += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    private IEnumerator ReductionSound()
-    {
-        while (true)
-        {
-            _audioSource.volume -= Time.deltaTime;
             yield return null;
         }
     }
