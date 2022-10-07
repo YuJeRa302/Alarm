@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+using System;
 
 public class Alarm : MonoBehaviour
 {
@@ -14,17 +14,22 @@ public class Alarm : MonoBehaviour
         _audioSource.Play();
     }
 
-    public void ChangeSound(float target)
+    public void ChangeSound(bool IsTriggerEnter)
     {
         if (_volumeChange != null)
         {
             StopCoroutine(_volumeChange);
-            _volumeChange = ChangeVolume(target);
+            _volumeChange = ChangeVolume(Convert.ToInt32(IsTriggerEnter));
             StartCoroutine(_volumeChange);
         }
         else
         {
-            _volumeChange = ChangeVolume(target);
+            if (_volumeChange != null)
+            {
+                StopCoroutine(_volumeChange);
+            }
+
+            _volumeChange = ChangeVolume(Convert.ToInt32(IsTriggerEnter));
             StartCoroutine(_volumeChange);
         }
     }

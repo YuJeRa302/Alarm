@@ -19,9 +19,8 @@ public class Trigger : MonoBehaviour
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             IsTriggerEnter = true;
-            float target = IsTriggerEnter ? 1 : 0;
+            _alarm.ChangeSound(IsTriggerEnter);
             _triggerEnter.Invoke();
-            _alarm.ChangeSound(target);
         }
     }
 
@@ -30,9 +29,8 @@ public class Trigger : MonoBehaviour
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             IsTriggerEnter = false;
-            float target = IsTriggerEnter ? 1 : 0;
+            _alarm.ChangeSound(IsTriggerEnter);
             _triggerEnter.Invoke();
-            _alarm.ChangeSound(target);
         }
     }
 }
