@@ -6,41 +6,34 @@ public class Alarm : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
 
-    private IEnumerator _sound—hange;
+    private IEnumerator _volumeChange;
+    private float _speed = 0.2f;
 
     private void Start()
     {
         _audioSource.Play();
     }
 
-    public void ChangeSound(bool isTriggerEnter)
+    public void ChangeSound(float target)
     {
-        if (_sound—hange != null)
+        if (_volumeChange != null)
         {
-            StopCoroutine(_sound—hange);
-            _sound—hange = —hangeVolume(isTriggerEnter);
-            StartCoroutine(_sound—hange);
+            StopCoroutine(_volumeChange);
+            _volumeChange = ChangeVolume(target);
+            StartCoroutine(_volumeChange);
         }
         else
         {
-            _sound—hange = —hangeVolume(isTriggerEnter);
-            StartCoroutine(_sound—hange);
+            _volumeChange = ChangeVolume(target);
+            StartCoroutine(_volumeChange);
         }
     }
 
-    private IEnumerator —hangeVolume(bool isChagenVolume)
+    private IEnumerator ChangeVolume(float target)
     {
-        while (true)
+        while (_audioSource.volume != target)
         {
-            if (isChagenVolume == true)
-            {
-                _audioSource.volume += Time.deltaTime;
-            }
-            else
-            {
-                _audioSource.volume -= Time.deltaTime;
-            }
-
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, target, _speed * Time.deltaTime);
             yield return null;
         }
     }

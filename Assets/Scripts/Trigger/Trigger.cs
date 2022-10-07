@@ -4,8 +4,7 @@ using UnityEngine.Events;
 public class Trigger : MonoBehaviour
 {
     [SerializeField] private UnityEvent _triggerEnter = new UnityEvent();
-
-    private Alarm _alarm;
+    [SerializeField] private Alarm _alarm;
 
     public event UnityAction TriggerEnter
     {
@@ -15,18 +14,14 @@ public class Trigger : MonoBehaviour
 
     public bool IsTriggerEnter { get; private set; }
 
-    private void Awake()
-    {
-        _alarm = FindObjectOfType<Alarm>();
-    }
-
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             IsTriggerEnter = true;
+            float target = IsTriggerEnter ? 1 : 0;
             _triggerEnter.Invoke();
-            _alarm.ChangeSound(IsTriggerEnter);
+            _alarm.ChangeSound(target);
         }
     }
 
@@ -35,8 +30,9 @@ public class Trigger : MonoBehaviour
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             IsTriggerEnter = false;
+            float target = IsTriggerEnter ? 1 : 0;
             _triggerEnter.Invoke();
-            _alarm.ChangeSound(IsTriggerEnter);
+            _alarm.ChangeSound(target);
         }
     }
 }

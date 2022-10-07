@@ -3,8 +3,7 @@ using UnityEngine;
 public class AlarmAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-
-    private Trigger _trigger;
+    [SerializeField] private Trigger _trigger;
 
     enum TransitionParametr
     {
@@ -13,7 +12,6 @@ public class AlarmAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        _trigger = FindObjectOfType<Trigger>();
         _trigger.TriggerEnter += TriggerEnter;
     }
 
