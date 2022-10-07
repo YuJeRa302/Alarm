@@ -14,15 +14,7 @@ public class CowboyAnimation : MonoBehaviour
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             var transitionParametr = Animator.StringToHash(TransitionParametr.IsRotate.ToString());
-
-            if (_animator.GetBool(transitionParametr) == true)
-            {
-                _animator.SetBool(transitionParametr, false);
-            }
-            else
-            {
-                _animator.SetBool(transitionParametr, true);
-            }
+            _animator.SetBool(transitionParametr, !_animator.GetBool(transitionParametr));
         }
     }
 }
