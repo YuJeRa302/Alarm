@@ -12,15 +12,15 @@ public class AlarmAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        _trigger.TriggerEnter += TriggerEnter;
+        _trigger.TriggerEnter += OnTriggerEnter;
     }
 
     private void OnDisable()
     {
-        _trigger.TriggerEnter -= TriggerEnter;
+        _trigger.TriggerEnter -= OnTriggerEnter;
     }
 
-    private void TriggerEnter()
+    private void OnTriggerEnter()
     {
         var transitionParametr = Animator.StringToHash(TransitionParametr.IsAlarm.ToString());
         _animator.SetBool(transitionParametr, _trigger.IsTriggerEnter);
