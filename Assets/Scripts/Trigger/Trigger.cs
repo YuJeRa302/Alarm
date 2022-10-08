@@ -19,8 +19,7 @@ public class Trigger : MonoBehaviour
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             IsTriggerEnter = true;
-            _alarm.ChangeSound(IsTriggerEnter);
-            _triggerEnter.Invoke();
+            UpdateTigger();
         }
     }
 
@@ -29,8 +28,13 @@ public class Trigger : MonoBehaviour
         if (collision.TryGetComponent<CowboyController>(out CowboyController cowboy))
         {
             IsTriggerEnter = false;
-            _alarm.ChangeSound(IsTriggerEnter);
-            _triggerEnter.Invoke();
+            UpdateTigger();
         }
+    }
+
+    private void UpdateTigger() 
+    {
+        _alarm.ChangeSound(IsTriggerEnter);
+        _triggerEnter.Invoke();
     }
 }
